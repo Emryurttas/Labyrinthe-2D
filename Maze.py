@@ -105,3 +105,22 @@ class Maze:
             for j in range(self.width):
                 L.append((i, j))
         return L
+
+    def remove_wall(self, c1, c2):
+        """
+        Cette méthode supprime un mur entre c1 et c2
+        :param c1: la cellule 1
+        :param c2: la cellule 2
+        :return: rien
+        """
+        # Facultatif : on teste si les sommets sont bien dans le labyrinthe
+        assert 0 <= c1[0] < self.height and \
+               0 <= c1[1] < self.width and \
+               0 <= c2[0] < self.height and \
+               0 <= c2[1] < self.width, \
+            f"Impossible de supprimer un mur entre {c1} et {c2} : les coordonnées de sont pas compatibles avec les dimensions du labyrinthe"
+        # Suppresion du mur
+        if not(c2 in self.neighbors[c1]):  # Si c2 n'est pas dans les voisines de c1
+            self.neighbors[c1].add(c2)  # on le rajoute
+        if not(c1 in self.neighbors[c2]):  # Si c3 n'est pas dans les voisines de c2
+            self.neighbors[c2].add(c1)  # on le rajoute
