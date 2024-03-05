@@ -14,8 +14,8 @@ class Maze:
         Les voisinages sont initialisés à des ensembles vides
         Remarque : dans le labyrinthe créé, chaque cellule est complètement emmurée
         """
-        self.height    = height
-        self.width     = width
+        self.height = height
+        self.width = width
         self.neighbors = {(i,j): set() for i in range(height) for j in range (width)}
 
     def info(self):
@@ -94,3 +94,15 @@ class Maze:
             self.neighbors[c1].remove(c2)  # on le retire
         if c1 in self.neighbors[c2]:  # Si c3 est dans les voisines de c2
             self.neighbors[c2].remove(c1)  # on le retire
+
+    def get_walls(self)->list:
+        """
+        Cette méthode retorune la liste de tous les murs
+        :return: la liste des murs
+        """
+        walls = []
+        for lines in range(self.width):
+            for columns in range(self.height):
+                walls.append((lines, columns))
+        return walls
+
