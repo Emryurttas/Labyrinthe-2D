@@ -124,3 +124,21 @@ class Maze:
             self.neighbors[c1].add(c2)  # on le rajoute
         if not(c1 in self.neighbors[c2]):  # Si c3 n'est pas dans les voisines de c2
             self.neighbors[c2].add(c1)  # on le rajoute
+
+    def get_walls(self)->list:
+        """
+        Cette méthode nous donne la liste des murs
+        :return: la liste des murs sous forme d'une liste tuple
+        """
+        L = []
+        for c1 in self.get_cells():
+            c2 = (c1[0], c1[0]+1)
+            if c2 in self.get_cells() and not (c2 in self.neighbors[c1]):
+                L.append([c1, c2])
+            c3 = (c1[0]+1, c1[1])
+            if c3 in self.get_cells() and not (c3 in self.neighbors[c1]):
+                L.append([c1, c3])
+        return L
+
+
+
