@@ -142,7 +142,7 @@ class Maze:
 
     def fill(self)->None:
         """
-        Cette méthode rajoute tout les murs possible au labyrinthe
+        Cette méthode rajoute tous les murs possibles au labyrinthe
         :return: rien
         """
         for i in range(self.width):
