@@ -150,5 +150,17 @@ class Maze:
                 self.neighbors[(i, j)] = set()
         return None
 
+    def empty(self):
+        """
+        Cette méthode Supprime tous les murs dans le labyrinthe
+        :return: rien
+        """
+        for i in range(self.height):
+            for j in range(self.width):
+                # Supprime de murs vers la droite et vers le bas
+                if j + 1 < self.width:
+                    self.remove_wall((i, j), (i, j + 1))
+                if i + 1 < self.height:
+                    self.remove_wall((i, j), (i + 1, j))
 
 
