@@ -181,6 +181,11 @@ class Maze:
         return contiguous
 
     def get_reachable_cells(self, c)->list:
+        """
+        Cette méthode retourne la liste des cellules accessibles depuis c
+        :param c: la cellule dont on veut savoir les cellules accessibles
+        :return: la liste des cellules accessibles depuis c
+        """
         reachable = []
         contiguousCells = self.get_contiguous_cells(c)
         for cell in contiguousCells:
