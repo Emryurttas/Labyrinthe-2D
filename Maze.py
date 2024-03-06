@@ -179,3 +179,12 @@ class Maze:
             contiguous.append((c[0], c[1]+1))
 
         return contiguous
+
+    def get_reachable_cells(self, c)->list:
+        reachable = []
+        contiguousCells = self.get_contiguous_cells(c)
+        for cell in contiguousCells:
+            if cell in self.neighbors[c]:
+                reachable.append(cell)
+
+        return reachable
