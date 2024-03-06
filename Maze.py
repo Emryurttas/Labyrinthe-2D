@@ -140,5 +140,15 @@ class Maze:
                 L.append([c1, c3])
         return L
 
+    def fill(self)->None:
+        """
+        Cette méthode rajoute tout les murs possible au labyrinthe
+        :return: rien
+        """
+        for i in range(self.width):
+            for j in range(self.height):
+                self.neighbors[(i, j)] = set()
+        return None
+
 
 
