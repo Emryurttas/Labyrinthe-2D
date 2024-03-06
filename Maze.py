@@ -163,4 +163,19 @@ class Maze:
                 if i + 1 < self.height:
                     self.remove_wall((i, j), (i + 1, j))
 
+    def get_contiguous_cells(self, c)->list:
+        """
+        Cette méthode nous donnes la liste des cellules contigües à c
+        :return: la liste des cellules contigües de c
+        """
+        contiguous = []
+        if c[0]-1 >= 0:
+            contiguous.append((c[0]-1, c[1]))
+        if c[0]+1 < self.height:
+            contiguous.append((c[0]+1, c[1]))
+        if c[1]-1 >= 0:
+            contiguous.append((c[0], c[1]-1))
+        if c[1]+1 < self.width:
+            contiguous.append((c[0], c[1]+1))
 
+        return contiguous
