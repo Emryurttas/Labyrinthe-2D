@@ -202,6 +202,9 @@ class Maze:
         """
         Méthode de classe pour générer un labyrinthe à h lignes et w colonnes
         en utilisant l'algorithme de construction par arbre binaire.
+        :param h: la hauteur du labyrinthe
+        :param w: la largeur du labyrinthe
+        :return: le nouveau labyrinthe
         """
         maze = cls(h, w)
 
@@ -222,3 +225,42 @@ class Maze:
                     maze.remove_wall((i, j), (i + 1, j))
 
         return maze
+
+    @classmethod
+    def gen_slidewinder(cls, h, w):
+        """
+        Cette méthode génère un labyrinthe selon l'algorithme de sidewinder
+        :param h: la hauteur du labyrinthe
+        :param w: la largeur du labyrinthe
+        :return: le nouveau labyrinthe
+        """
+        maze = cls(h, w)
+
+        for i in range(h - 1):
+            sequence = []
+
+            for j in range(w - 1):
+                sequence.append((i, j))
+
+                if random.random() < 0.5:  # si c'est pile
+                    maze.remove_wall((i, j), (i, j + 1))
+                else:
+                    if sequence:  # si la séquence n'est pas vide
+                        random_cell = random.choice(sequence)
+                        maze.remove_wall(random_cell, (random_cell[0] + 1, random_cell[1]))
+                    sequence = []
+
+                    # ajouter la dernière cellule à la séquence
+            sequence.append((i, w - 1))
+
+            #Casser le mur SUD d'une cellule aléatoire dans la séquence
+            if sequence:
+                random_cell = random.choice(sequence)
+                maze.remove_wall(random_cell, (random_cell[0] + 1, random_cell[1]))
+
+        #Casser tous les murs EST de la dernière ligne
+        for j in range(w - 1):
+            maze.remove_wall((h - 1, j), (h - 1, j + 1))
+        return maze
+
+
