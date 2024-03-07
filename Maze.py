@@ -1,3 +1,6 @@
+import random
+
+
 class Maze:
     """
     Classe Labyrinthe
@@ -193,3 +196,29 @@ class Maze:
                 reachable.append(cell)
 
         return reachable
+
+    @classmethod
+    def gen_btree(cls, h, w):
+        """
+        Méthode de classe pour générer un labyrinthe à h lignes et w colonnes
+        en utilisant l'algorithme de construction par arbre binaire.
+        """
+        maze = cls(h, w)
+
+        for i in range(h):
+            for j in range(w):
+                if i < h - 1 and j < w - 1:
+                    direction = random.choice(["EST", "SUD"])
+                elif i < h - 1:
+                    direction = "SUD"
+                elif j < w - 1:
+                    direction = "EST"
+                else:
+                    direction = None
+
+                if direction == "EST":
+                    maze.remove_wall((i, j), (i, j + 1))
+                elif direction == "SUD":
+                    maze.remove_wall((i, j), (i + 1, j))
+
+        return maze
