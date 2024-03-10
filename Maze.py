@@ -343,7 +343,59 @@ class Maze:
 
         return maze
 
+    @classmethod
+    def gen_wilson(cls, h, w):
+        """
+        Cette méthode génère un labyrinthe parfait en utilisant l'algorithme de Wilson
+        :param h: la hauteur du labyrinthe
+        :param w: la largeur du labyrinthe
+        :return: le nouveau labyrinthe
+        """
 
+        maze = cls(h, w)
+
+        # Initialiser la liste de toutes les cellules non visitées
+        cellules_non_visitees = []
+        for i in range(h):
+            for j in range(w):
+                cellules_non_visitees.append((i, j))
+
+        # Choisir une cellule au hasard pour commencer
+        cellule_depart = random.choice(cellules_non_visitees)
+        cellules_visitees = [cellule_depart]
+        cellules_non_visitees.remove(cellule_depart)
+
+        # Tant qu'il reste des cellules non visitées
+        while cellules_non_visitees:
+            # Choisir une cellule non visitée au hasard pour commencer une marche aléatoire
+            cellule_actuelle = random.choice(cellules_non_visitees)
+
+            # Initialiser le chemin avec la cellule actuelle
+            chemin = [cellule_actuelle]
+
+            # Effectuer une marche aléatoire jusqu'à atteindre une cellule visitée
+            while cellule_actuelle not in cellules_visitees:
+                voisins = maze.get_contiguous_cells(cellule_actuelle)
+                voisins_non_visites = []
+                for voisin in voisins:
+                    if voisin not in chemin:
+                        voisins_non_visites.append(voisin)
+
+                if not voisins_non_visites:
+                    break
+
+                prochaine_cellule = random.choice(voisins_non_visites)
+                chemin.append(prochaine_cellule)
+                cellule_actuelle = prochaine_cellule
+
+            # Marquer chaque cellule du chemin et casser les murs jusqu'à la cellule marquée
+            for i in range(len(chemin) - 1):
+                cellule = chemin[i]
+                prochaine_cellule = chemin[i + 1]
+                maze.remove_wall(cellule, prochaine_cellule)
+                cellules_visitees.append(cellule)
+                cellules_non_visitees.remove(cellule)
+        return maze
 
 
 
