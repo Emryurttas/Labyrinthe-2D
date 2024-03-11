@@ -478,4 +478,35 @@ class Maze:
                     pile.append(cell)
         return chemin
 
+    def solve_bfs(self, start, stop):
+        """
+        Résout le labyrinthe en utilisant un parcours en largeur.
+        :param start: La cellule de départ
+        :param stop: La cellule d'arrivée
+        :return: Le chemin de la cellule de départ à la cellule d'arrivée, ou                  None s'il n'y a pas de chemin
+        """
+        pred = {}
+        file = [start]  # File pour le parcours en largeur
+
+        chemin = None
+
+        # Parcours en largeur
+        while file and chemin is None:
+            cellule_courant = file.pop(0)
+
+            if cellule_courant == stop:
+                chemin = [stop]
+                while chemin[-1] != start:
+                    chemin.append(pred[chemin[-1]])
+
+            # Récupérer les cellules accessibles depuis la cellule courante
+            reachable_cells = self.get_reachable_cells(cellule_courant)
+
+            # Parcourir les cellules accessibles
+            for cell in reachable_cells:
+                if cell not in pred:
+                    pred[cell] = cellule_courant
+                    file.append(cell)
+        return chemin
+
 
