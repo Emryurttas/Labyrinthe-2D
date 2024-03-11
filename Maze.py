@@ -447,5 +447,35 @@ class Maze:
         txt += "━━━┛\n"
         return txt
 
+    def solve_dfs(self, start, stop):
+        """
+        Résout le labyrinthe en utilisant un parcours en profondeur.
+        :param start: La cellule de départ
+        :param stop: La cellule d'arrivée
+        :return: Le chemin de la cellule de départ à la cellule d'arrivée, ou None s'il n'y a pas de chemin
+        """
+        pred = {}
+        pile = [start]  # Pile pour le parcours en profondeur
+
+        chemin = None
+
+        # Parcours en profondeur
+        while pile and chemin is None:
+            cellule_courant = pile.pop()
+
+            if cellule_courant == stop:
+                chemin = [stop]
+                while chemin[-1] != start:
+                    chemin.append(pred[chemin[-1]])
+
+            # Récupérer les cellules accessibles depuis la cellule courante
+            reachable_cells = self.get_reachable_cells(cellule_courant)
+
+            # Parcourir les cellules accessibles
+            for cell in reachable_cells:
+                if cell not in pred:
+                    pred[cell] = cellule_courant
+                    pile.append(cell)
+        return chemin
 
 
