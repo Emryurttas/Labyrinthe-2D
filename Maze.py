@@ -541,4 +541,18 @@ class Maze:
                     cellule_courante = chemin[-1]
         return chemin
 
+    def distance_geo(self, c1, c2):
+        """
+        Calcule la distance géodésique entre deux cellules c1 et c2.
+        :param c1: La première cellule
+        :param c2: La deuxième cellule
+        :return: La distance géodésique entre c1 et c2, ou None si                                    aucun chemin n'est trouvé
+        """
+        chemin = self.solve_bfs(c1, c2)
+        if chemin is None:
+            raise ValueError("Aucun chemin trouvé entre les cellules.")
+
+        return len(chemin) - 1
+
+
 
