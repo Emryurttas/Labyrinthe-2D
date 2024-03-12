@@ -491,7 +491,7 @@ class Maze:
         chemin = None
 
         # Parcours en largeur
-        while file and chemin is None:
+        while file:
             cellule_courant = file.pop(0)
 
             if cellule_courant == stop:
@@ -507,6 +507,38 @@ class Maze:
                 if cell not in pred:
                     pred[cell] = cellule_courant
                     file.append(cell)
+        return chemin
+
+    def solve_rhr(self, start, stop):
+        pred = {}
+        cellule_courante = start
+        chemin = [start]
+
+        # Liste des directions dans l'ordre: droite, bas, gauche, haut
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        while cellule_courante != stop:
+            direction_essai = False
+
+            # Essaie de chaque direction
+            for direction in directions:
+                proc_ligne = cellule_courante[0] + direction[0]
+                proc_col = cellule_courante[1] + direction[1]
+                cell_suiv = (proc_ligne, proc_col)
+
+                # Vérifie si la prochaine cellule est valide et n'a pas été visitée
+                if cell_suiv not in pred and cell_suiv in self.neighbors[cellule_courante]:
+                    pred[cell_suiv] = cellule_courante
+                    cellule_courante = cell_suiv
+                    chemin.append(cell_suiv)
+                    direction_essai = True
+
+            # Si aucune direction n'est possible, revenez en arrière
+            if not direction_essai:
+                if len(chemin) == 1:
+                    chemin = None
+                else:
+                    chemin.pop()
+                    cellule_courante = chemin[-1]
         return chemin
 
 
