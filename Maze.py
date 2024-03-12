@@ -554,5 +554,23 @@ class Maze:
 
         return len(chemin) - 1
 
+    def distance_man(self, c1, c2):
+        """
+        Calcule la distance de Manhattan entre deux cellules c1 et c2
+        :param c1: La première cellule
+        :param c2: La deuxième cellule
+        :return: La distance de Manhattan entre c1 et c2
+        """
+        dx = c1[0] - c2[0]
+        dy = c1[1] - c2[1]
+
+        if dx < 0:
+            dx = -dx
+        if dy < 0:
+            dy = -dy
+
+        manhattan_distance = dx + dy
+        return manhattan_distance
+
 
 
