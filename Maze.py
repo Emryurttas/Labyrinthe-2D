@@ -227,7 +227,7 @@ class Maze:
         return maze
 
     @classmethod
-    def gen_slidewinder(cls, h, w):
+    def gen_sidewinder(cls, h, w):
         """
         Cette méthode génère un labyrinthe selon l'algorithme de sidewinder
         :param h: la hauteur du labyrinthe
