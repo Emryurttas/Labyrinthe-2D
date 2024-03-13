@@ -546,7 +546,7 @@ class Maze:
         Calcule la distance géodésique entre deux cellules c1 et c2.
         :param c1: La première cellule
         :param c2: La deuxième cellule
-        :return: La distance géodésique entre c1 et c2, ou None si                                    aucun chemin n'est trouvé
+        :return: La distance géodésique entre c1 et c2, ou None si aucun chemin n'est trouvé
         """
         chemin = self.solve_bfs(c1, c2)
         if chemin is None:
@@ -571,6 +571,24 @@ class Maze:
 
         manhattan_distance = dx + dy
         return manhattan_distance
+
+    def worst_path_len(self)->int:
+        """
+        Cette méthode nous donne la  longueur du plus long chemin du départ à une impasse
+        :return: longueur du plus long chemin du départ à une impasse
+        """
+        cells = self.get_cells()
+        impasses = []
+        for cell in cells:
+            if len(Maze.get_reachable_cells(self, cell)) == 1:
+                impasses.append(cell)
+        max = 0
+        for impasse in impasses:
+            if max < len(self.solve_rhr((0, 0), impasse)):
+                max = len(self.solve_rhr((0, 0), impasse))
+
+        return max
+
 
 
 
