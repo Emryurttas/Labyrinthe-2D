@@ -589,6 +589,16 @@ class Maze:
 
         return max
 
-
+    def dead_end_number(self)->int:
+        """
+        Cette méthode nous donne le nombre de culs-de-sacs
+        :return: le nombre de culs-de-sacs
+        """
+        cells = self.get_cells()
+        nbCuldeSacs = 0
+        for cell in cells:
+            if len(Maze.get_reachable_cells(self, cell)) == 1:
+                nbCuldeSacs += 1
+        return nbCuldeSacs
 
 
