@@ -1,4 +1,5 @@
 import random
+import copy
 
 
 class Maze:
@@ -601,4 +602,35 @@ class Maze:
                 nbCuldeSacs += 1
         return nbCuldeSacs
 
+
+    def isPossible(self, c1, c2):
+        """
+        Est ce que le labyrinthe est réalisable
+        """
+        chemin = self.solve_bfs(c1, c2)
+
+        return chemin != None
+
+    @classmethod
+    def gen_hard_maze(cls, h, w, difficulty:int=1000, end:tuple=None):
+        """
+        Cette méthode génère un labyrinthe compliqué
+        :param h: hauteur du labyrinthe
+        :param w: largeur du labyrinthe
+        :param difficulty: difficulté du labyrinthe (nombre de labyrinthes testés)
+        :param end: où est la fin du labyrinthe
+        :return: Le labyrinthe
+        """
+        if end == None:
+            end = (h-1, w-1)
+        biggestMaze = cls.gen_wilson(h, w)
+        longuerMaze = 0
+        for i in range(difficulty):
+            print("search for the labyrinth... ")
+            maze = cls.gen_wilson(h, w)
+            if maze.isPossible((0, 0), end):
+                if maze.distance_geo((0, 0), end) > longuerMaze:
+                    longuerMaze = maze.distance_geo((0, 0), end)
+                    biggestMaze = copy.deepcopy(maze)
+        return biggestMaze
 
